@@ -2,7 +2,7 @@ import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 
-const app = express()
+
 
 app.use(cors({
     origin : process.env.CORS_ORIGIN,
@@ -16,6 +16,12 @@ app.use(express.static("public")) //image pdf file saved on server in public .
 app.use(cookieParser())
 
 
+//routers import
+import userRouter from "./routes/user.routes.js" //routes declarati
+app.use("/api/V1/users", userRouter) 
+
+// on client browser http://localhost:8000/api/v1/users/register 
+//http://localhost:8000/api/V1/users/register
 
 
-export { app }
+export default { app }
