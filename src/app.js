@@ -16,12 +16,16 @@ app.use(express.static("public")) //image pdf file saved on server in public .
 app.use(cookieParser())
 
 
+
+
 //routers import
-import userRouter from "./routes/user.routes.js" //routes declarati
-app.use("/api/V1/users", userRouter) 
+import userRouter from "./routes/user.routes.js" 
+//routes declaration
+// app.use("/api/v1/users", userRouter) 
+app.use("/api/v1/users",userRouter)
 
-// on client browser http://localhost:8000/api/v1/users/register 
-//http://localhost:8000/api/V1/users/register
+// on client browser http://localhost:4000/api/v1/users/register 
+//http://localhost:4000/api/v1/users/register
 
 
-export default { app }
+export{app}
