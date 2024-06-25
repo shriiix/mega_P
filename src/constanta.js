@@ -1,1 +1,1 @@
-export const DB_NAME = "megap"
+export const DB_NAME = "sample_mflix"
