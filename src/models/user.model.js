@@ -1,5 +1,5 @@
 import mongoose, {Schema} from "mongoose";
-import  Jwt  from "jsonwebtoken";
+import  Jwt  from "jsonwebtoken"; //it is Bearer token for the client side authentication endpoint and   will  one who has token can access data thatis it is like key for user
 import bcrypt from "bcrypt"
 
 const userSChema = new Schema (
@@ -27,7 +27,7 @@ const userSChema = new Schema (
         },
         avatar:{
             type : String,
-            required : true,
+            required : [true,"Avatar is required"],
         },
         coverImage :{
             type : String   //cloudinary url
@@ -41,7 +41,8 @@ const userSChema = new Schema (
 
         password :{
             type : String,
-            required : [true, 'password is required ']
+            required : [true, 'password is required '],
+            trim : true,
         },
         refreshToken :{
             type : String

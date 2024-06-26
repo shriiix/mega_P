@@ -4,6 +4,8 @@ import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
+
+//user register
 const registerUser = asyncHandler(async(req,res)=>{
     //get user detail from front end
     //validation - not empty
@@ -16,12 +18,12 @@ const registerUser = asyncHandler(async(req,res)=>{
     //return response
 
     //user detail
-    const {fullname,email,username,password }=req.body
+    const {fullname,email,username,password }=req.body;
     //console.log("email : ",email);
 
     //return if require field is empty
     if (
-        [fullname, email, username, password].some((field) => field?.trim() === "")
+        [fullname, email, username, password].some((fields) => fields?.trim() === "")
     )  {
         throw new ApiError(400,"All field are required")  
     }
@@ -35,7 +37,10 @@ const registerUser = asyncHandler(async(req,res)=>{
     
     //images
 
-    const avatarLocalPath = req.files?.avatar[0]?.path;
+    const avatarLocalPath = req.files
+    ?.avatar[0]?.path;
+    console.log(avatarLocalPath , "and  l l l l cover ---->", req.files?.coverImage[0]?.path,"file \n",req.files, "avatarLocalPath see me in USERCONTROLLER \n")
+ 
     const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
     if (!avatarLocalPath) {
@@ -77,6 +82,6 @@ const registerUser = asyncHandler(async(req,res)=>{
     )
 
 
-})
+});
 
 export {registerUser} 

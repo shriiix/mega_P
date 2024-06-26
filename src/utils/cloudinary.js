@@ -1,8 +1,8 @@
 import {v2 as cloudinary} from "cloudinary"
 import fs from "fs"
-//import * as dotenv from "dotenv";
-//filesystem read write remove operation 
-// dotenv.config()
+import * as dotenv from "dotenv";
+// filesystem read write remove operation 
+dotenv.config()
           
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
