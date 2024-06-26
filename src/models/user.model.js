@@ -1,5 +1,5 @@
 import mongoose, {Schema} from "mongoose";
-import { Jwt } from "jsonwebtoken";
+import  Jwt  from "jsonwebtoken";
 import bcrypt from "bcrypt"
 
 const userSChema = new Schema (
@@ -27,14 +27,14 @@ const userSChema = new Schema (
         },
         avatar:{
             type : String,
-            required : true
+            required : true,
         },
         coverImage :{
             type : String   //cloudinary url
         },
         watchhistory :[
             {
-                type : mongoose.Schema.Type.ObjectId,
+                type : Schema.Types.ObjectId,
                 ref : "Video"
             }
         ],
@@ -47,8 +47,6 @@ const userSChema = new Schema (
             type : String
 
         },
-       
-
 
     },
     {
@@ -73,7 +71,7 @@ userSChema.methods.isPasswordCorrect = async function(password){
 
 
 userSChema.methods.generateAccessToken = function(){
-    return jwt.sign({
+    return Jwt.sign({
         _id : this._id,
         email: this.email,
         username : this.username,

@@ -1,7 +1,8 @@
 import {v2 as cloudinary} from "cloudinary"
 import fs from "fs"
+//import * as dotenv from "dotenv";
 //filesystem read write remove operation 
-
+// dotenv.config()
           
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
@@ -12,14 +13,15 @@ cloudinary.config({
 
 const uploadOnCloudinary = async(localFilePath)=> {
     try{
-        if(!localFilePath)return null //wrong file path
+        if(!localFilePath) return null //wrong file path
         //upload file on Clodinary 
-        const responce = await cloudinary.uploader.upload(localFilePath,{
+        
+        const response = await cloudinary.uploader.upload(localFilePath,{
             resource_type:"auto"
         })
         //file upload succesfully
-        console.log(responce.url, "file uploaded on cloudinary ");
-        return responce;
+        console.log(response.url, "file uploaded on cloudinary ");
+        return response;
 
     }catch(error){
         fs.unlinkSync(localFilePath) //removed the locally saved files from the server

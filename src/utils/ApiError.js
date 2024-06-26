@@ -1,16 +1,10 @@
-//API error handler 
-
-class ApiError extends Error{
-
-    constructor (
+class ApiError extends Error {
+    constructor(
         statusCode,
-        message = "Something went Wrong",
+        message= "Something went wrong",
         errors = [],
         stack = ""
-
     ){
-
-        //override use call super 
         super(message)
         this.statusCode = statusCode
         this.data = null
@@ -18,16 +12,13 @@ class ApiError extends Error{
         this.success = false;
         this.errors = errors
 
-        if(stack){
-            this.stack = stack 
-        }else{
-            Error.captureStackTrace(this,this.costructor)
+        if (stack) {
+            this.stack = stack
+        } else{
+            Error.captureStackTrace(this, this.constructor)
         }
 
-
     }
-
-
 }
 
-export{ApiError}
+export {ApiError}
