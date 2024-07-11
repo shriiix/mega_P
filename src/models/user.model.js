@@ -51,7 +51,7 @@ const userSChema = new Schema (
 
     },
     {
-        timeStamps : true
+        timestamps : true
 
     },
 )
@@ -78,7 +78,7 @@ userSChema.methods.generateAccessToken = function(){
         username : this.username,
         fullname : this.fullname
     },
-    process.env.ACCESS_TOKEN_SECRET,
+    process.env.ACCESS_TOKEN_SECRET, 
     {
         expireIn: process.env.ACCESS_TOKEN_EXPIRY
 
