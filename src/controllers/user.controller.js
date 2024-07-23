@@ -6,6 +6,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import { Subscription } from "../models/subscription.model.js";
 import { Timestamp } from "mongodb";
+import mongoose from "mongoose";
+import { response } from "express";
 
 //generateAccessTokenAndRefreshToken
 //to saved password or userinfo .
@@ -365,7 +367,7 @@ const getUserChannelProfile = asyncHandler(async(req,res)=>{
             }
         },
         {
-            //check count of Subscriber through the channels
+            //check count of Subscriber/user through the channels
             $lookup:{
                 from:"subcriptions",
                 localField : "_id",
@@ -375,7 +377,7 @@ const getUserChannelProfile = asyncHandler(async(req,res)=>{
 
         },
         {
-            //how many you subcribe to other channel
+            //how many you subcribe/channel owner to other channel
             $lookup:{
                 from:"subcriptions",
                 localField:"_id",
@@ -436,6 +438,71 @@ const getUserChannelProfile = asyncHandler(async(req,res)=>{
 })
 
 
+//get user watch history
+
+const getWatchHistory = asyncHandler(async(req,res)=>{
+    const user = await User.aggregate([
+        {
+            //match document with object id
+            $match :{
+                _id:new mongoose.Types.ObjectId(req.user._id)
+            }
+        },
+        {   
+            //get watch history
+            $lookup:{
+                from:"Videos",
+                localField:"watchHistory",
+                foreignField:"_id",
+                as:"watchHistory",
+                
+                //sub pipeline for get particular data from the user
+                
+                pipeline:[
+                    {
+                        $lookup:{
+                            from:"users",
+                            localField:"owner",
+                            foreignField:"_id",
+                            as :"owner",
+                            pipeline:[
+                                {
+                                    $project:{
+                                        username:1,
+                                        avatar:1
+
+                                    }
+                                }
+                            ]                    
+                        }
+                    },
+                    {
+                        owner:{
+                            $first:"$owner"
+                        }                        
+                    }
+                    
+                ]
+            }
+        }
+
+    ])
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            user[0].watchHistory,
+            "watchHistory fetched successfully"
+        
+        )
+    )
+
+
+})
+
+
 
 
 
@@ -449,5 +516,6 @@ export {registerUser,
         updateAccountDetail,
         updateUserAvatar,
         updateUserCoverImage,
-        getUserChannelProfile
+        getUserChannelProfile,
+        getWatchHistory
 } 
